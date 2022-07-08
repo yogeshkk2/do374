@@ -1,0 +1,3 @@
+playbook-artifact-*
+.ssh
+ansible-navigator.log
