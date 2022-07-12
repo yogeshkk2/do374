@@ -1,0 +1,6 @@
+---
+- name: Test of ROLE 
+  hosts: servera.lab.example.com
+  roles:
+    - vsftpd
+

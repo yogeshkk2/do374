@@ -1,0 +1,5 @@
+- name: restart vsftpd
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items: "{{ vsftpd_service }}"

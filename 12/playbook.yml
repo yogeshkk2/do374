@@ -24,17 +24,3 @@
       copy:
         content: "HelloWorld\n"
         dest: /var/www/html/index.html
-
-    - block:
-        - name: Check web site from web server
-          uri:
-            url: http://servera.lab.example.com
-            return_content: yes
-          register: example_webpage
-          failed_when: example_webpage.status !=200
-      
-      rescue:
-        - name: Restart web service
-          service:
-            name: httpd
-            state: restarted

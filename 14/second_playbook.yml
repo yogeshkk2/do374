@@ -1,0 +1,40 @@
+---
+- name: Test of ROLE 
+  hosts: servera.lab.example.com
+  gather_facts: yes
+  tasks:
+    - name: Deploy webservice
+      yum: 
+        name: httpd
+        state: latest
+
+    - name: Start service
+      service: 
+        name: httpd
+        state: started
+        enabled: no
+
+    - name: Add Rule in Firewall
+      firewalld: 
+        service: http
+        permanent: yes
+        state: enabled
+
+    - name: Content deployment
+      copy:
+        content: "HelloWorld\n"
+        dest: /var/www/html/index.html
+
+    - block:
+        - name: Check web site from web server
+          uri:
+            url: http://servera.lab.example.com
+            return_content: yes
+          register: example_webpage
+          failed_when: example_webpage.status !=200
+      
+      rescue:
+        - name: Restart web service
+          service:
+            name: httpd
+            state: restarted
