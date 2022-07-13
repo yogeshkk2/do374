@@ -1,0 +1,30 @@
+---
+- name: Test of collections
+  hosts: servera.lab.example.com
+  tasks:
+    - name: Install web
+      ansible.builtin.yum:
+        name:
+          - httpd
+          - mod_ssl
+        state: present
+
+    - name: Start service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+
+    - name: Creat website
+      ansible.builtin.copy:
+        content: "Ansible Collections Demo\n"
+        dest: /var/www/html/index.html
+
+    - name: Create firewall rules 
+      ansible.posix.firewalld:
+        service: "{{ item }}"
+        permanent: yes
+        immediate: yes
+        state: enabled
+      loop:
+        - http
+        - https
