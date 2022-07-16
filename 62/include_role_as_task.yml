@@ -1,0 +1,17 @@
+---
+- name: Including Role as a task
+  hosts: servera.lab.example.com
+  gather_facts: no
+  tasks:
+    - name: A normal first task
+      debug:
+        msg: "This is first regular task"
+  
+    - name: A include of role as task
+      include_role:
+        name: vsftpd
+
+    - name: A normal second task
+      debug:
+        msg: "This is second regular task"
+

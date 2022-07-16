@@ -1,0 +1,9 @@
+---
+- name: Testing of Host Order
+  hosts: all
+  order: sorted
+  tasks:
+    - name: check connectivity
+      debug:
+        msg: This is "{{ inventory_hostname }}" system
+        
