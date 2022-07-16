@@ -1,0 +1,35 @@
+---
+- name: Become the root user
+  hosts: webservers
+  become: false
+  tasks:
+    - block:
+        - name: Install HTTPD service
+          yum:
+            name: httpd
+            state: present
+        - name: Start the service
+          service:
+            name: httpd
+            state: started
+            enabled: no
+        - name: Stop the service
+          service:
+            name: firewalld
+            state: stopped
+            enabled: no
+        - name: Deploy webpage
+          copy:
+            content: HelloWorld
+            dest: /var/www/html/index.html
+      #become: true
+
+    - name: Test WebService
+      uri:
+        url: http://servera.lab.example.com
+        return_content: yes
+      register: output
+      failed_when: output.status !=200
+    - debug:
+        var=output.status
+

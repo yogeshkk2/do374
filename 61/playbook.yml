@@ -1,0 +1,29 @@
+---
+- name: Become the root user
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Show the user used by this first play
+      shell: whoami
+      register: first
+    - debug:
+        var: first
+
+- name: Do not use privilege escalation
+  hosts: webservers
+  become: false
+  tasks:
+    - name: Show the user used by this second play
+      shell: whoami
+      register: second
+    - debug:
+        var: second
+        
+- name: Use privilege escalation based on defaults
+  hosts: webservers
+  tasks:
+    - name: Show the user used by this third play
+      shell: whoami
+      register: third
+    - debug:
+        var: third
