@@ -1,0 +1,13 @@
+---
+- name: Testing Variable Precedence 
+  hosts: all
+  tasks:
+    - name: Install {{ package }} package
+      yum:
+        name: "{{ package }}"
+        state: present
+      register: result
+
+    - name: Show results
+      debug:
+        var: result.results
