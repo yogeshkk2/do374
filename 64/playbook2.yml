@@ -1,0 +1,21 @@
+---
+- name: Test of Callback plugin
+  hosts: servera.lab.example.com
+  tasks:
+    - name: Remove packages if exists
+      yum:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - mariadb-server
+        - mariadb
+        - gnuplot
+        
+    - name: Install packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - mariadb-server
+        - mariadb
+        - gnuplot 

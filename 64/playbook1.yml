@@ -1,0 +1,7 @@
+---
+- name: Testing Facts gathering
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Display info
+      debug: var=inventory_hostname
