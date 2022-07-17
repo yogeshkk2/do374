@@ -1,0 +1,51 @@
+---
+- name: Testin of Tags
+  hosts: servera.lab.example.com
+  gather_facts: no
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+      tags:
+        - english
+        - spanish
+        - never
+
+    - name: Start httpd Service
+      service:
+        name: httpd
+        state: started
+        enabled: no
+      tags:
+        - english
+        - spanish
+        - never
+
+    - name: Add Firewall rule for HTTP
+      firewalld:
+        service: http
+        state: enabled
+        permanent: yes
+        immediate: yes
+      tags:
+        - english
+        - spanish
+        - never
+
+    - name: Deploy WebPage A Content
+      copy:
+        content: "Hello, Good Morning\n"
+        dest: /var/www/html/index.html
+      tags:
+        - english
+        - never
+
+    - name: Deploy WebPage B Content
+      copy:
+        content: "Hola, Buenos días\n"
+        dest: /var/www/html/index.html
+      tags:
+        - spanish
+        - never
+
