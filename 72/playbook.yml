@@ -1,0 +1,29 @@
+---
+- name: Lookup Plugin demos
+  hosts: servera.lab.example.com
+  tasks:
+    - name: Test of Lookup 
+      vars:
+        lookuphost: "{{ lookup('file', '/etc/resolv.conf', '/etc/issue') }}"
+      debug:
+        msg: "{{ lookuphost }}"
+    
+    - name: Test of Query 
+      vars:
+        queryhost: "{{ query('file', '/etc/resolv.conf', '/etc/issue') }}"
+      debug:
+        msg: "{{ queryhost }}"
+
+    - name: Print the message
+      vars:
+        name: DO374 Class
+      debug:
+        msg: "{{ lookup('template', 'my.template.j2') }}"
+
+    - name: Prints the first line of some files
+      debug:
+        msg: "{{ item[0] }}"
+      loop:
+        - "{{ query('lines', 'cat files/my.file') }}"
+        - "{{ query('lines', 'cat files/my.file.2') }}"
+

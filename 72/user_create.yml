@@ -1,0 +1,11 @@
+---
+- name: Create user with Random 8 digit password 
+  hosts: servera.lab.example.com
+  tasks:
+    - name: Create Accounts
+      vars:
+        password: "{{ lookup('password', 'passwordfile encrypt=sha512_crypt length=8 chars=digits') }}"
+      user:
+        name: bob
+        password: "{{ password }}"
+        update_password: on_create
