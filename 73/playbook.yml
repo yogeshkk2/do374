@@ -1,0 +1,15 @@
+---
+- name: Create user accounts of two users with GECOS field and uid set
+  hosts: servera.lab.example.com
+  vars_files:
+    - users.yml
+  tasks:
+    - name: Create Remote accounts with specifications
+      vars:
+        password: "{{ lookup('password', 'password-{{ item.first }} encrypt=sha512_crypt chars=digits length=8') }}"
+      user:
+        name: "{{ item.name }}"
+        password: "{{ password }}"
+        comment: "{{ item.first | capitalize }} {{ item.middle | capitalize }} {{ item.last | capitalize }}"
+        uid: "{{ item.uid }}"
+      with_items: "{{ users }}"

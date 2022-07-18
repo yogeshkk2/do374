@@ -1,0 +1,11 @@
+users:
+  - name: jsnow
+    first: john
+    middle: eddard
+    last: snow
+    uid: 20000
+  - name: astark
+    first: arya
+    middle: eddard
+    last: stark
+    uid: 20001
