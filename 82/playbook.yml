@@ -1,0 +1,13 @@
+---
+- name: Controlling batch size
+  hosts: all
+  #serial: 35%
+  # Try serial 33%, and ansible takes on 1 host per batch where above 33% it should be 2 hosts per batch #
+  serial:
+    - 1
+    - 40%
+    - 100%
+  max_fail_percentage: 30%
+  tasks:
+    - name: Check ping
+      ping:
