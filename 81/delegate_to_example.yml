@@ -1,0 +1,21 @@
+---
+- name: Demo of delegate_to function
+  hosts: servera.lab.example.com
+  tasks:
+    - name: Get system information for Servera
+      command: uname -a
+      register: servera
+
+    - name: Display server information
+      debug:
+        msg: "{{ servera.stdout }}" 
+
+    - name: Get system information for Serverb
+      command: uname -a
+      delegate_to: serverb.lab.example.com
+      register: serverb
+
+    - name: Display server information
+      debug:
+        msg: "{{ serverb.stdout }}"
+    

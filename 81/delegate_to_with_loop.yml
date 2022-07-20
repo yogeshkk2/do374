@@ -1,0 +1,33 @@
+---
+- name: Demo of loop with delegate_to function
+  hosts:
+    - servera.lab.example.com
+    - serverb.lab.example.com
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+      
+    - name: Start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: no
+
+    - name: Install MariaDB
+      yum:
+        name: mariadb-server
+        state: present
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['datacenter1'] }}"
+
+    - name: Start DB service
+      service:
+        name: mariadb
+        state: started
+        enabled: no
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['datacenter1'] }}"
+       
+
