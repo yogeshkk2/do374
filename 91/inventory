@@ -1,0 +1,7 @@
+servera.lab.example.com
+serverb.lab.example.com
+
+[datacenter1]
+serverc.lab.example.com
+serverd.lab.example.com
+serverf.lab.example.com
