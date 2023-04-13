@@ -1,0 +1,151 @@
+---
+- name: Filter Testing
+  hosts: servera.lab.example.com
+  vars:
+    NFL:
+      - Seahawks
+      - Giants
+      - Packers
+      - Falcons
+    address: |
+      1050 Crown Pointe Pkwy,
+      10th floor,
+      Atlanta,
+      GA 30338
+      United States
+    variable1: starwars
+
+    nfl_dict:
+      Giants: Newyork
+      Seahawks: Seattle
+      Falcons: Atlanta
+    nfl_items:
+      - key: Giants
+        value: Newyork
+      - key: Seahawks
+        value: Seattle
+      - key: Falcons
+        value: Atlanta
+
+  tasks:
+    - name: Display long string part 1
+      copy: 
+        content: "{{ address }}"
+        dest: /tmp/address.txt
+             
+    - name: Confirm that the second list element is "Giants"
+      debug:
+        msg:  "{{ NFL[1] == 'Giants' }}"
+
+    - name: Capitalize first character
+      debug:
+        msg: "{{ variable1 | capitalize }}"
+
+    - name: Test to see if the assertion is true, fail if not
+      debug:
+        msg: "{{[4, 2, 1, 2 ] | unique | sort }}"
+
+        #Expected:  [1, 2, 4]
+
+
+    - name: Convert value to an integer with the int filter
+      debug:
+        msg: "{{ ( ansible_facts['date_time']['hour'] | int ) + 5 }}"
+
+    - name: mathematical operation root of 1024
+      debug:
+        msg: "{{ 1024 | root }}"
+
+    - name: mathematical operation sum
+      debug:
+        msg: "{{ [1, 2, 3, 4, 5, 6, 7] | sum }}"
+
+    - name: Assertions of length, first and last
+      assert:
+        that:
+          - "{{[ 2, 4, 8, 16, 32, 64, 128 ] |length }} is eq( 7 )"
+          - "{{[ 2, 4, 8, 16, 32, 64, 128 ] |first }} is eq( 2 )"
+          - "{{[ 2, 4, 8, 16, 32, 64, 128 ] |last }} is eq( 128 )"
+
+    - name: Pick random string
+      debug:
+        msg: "{{ ['Giants', 'Falcons', 'Seahawks'] | random }}"
+    
+    - name: Assertions of reversing, sorting and flatten lists
+      assert:
+        that:
+          # Reverse the order
+          - "{{[ 2, 4, 8, 16 ] | reverse }} is eq( [ 16, 8, 4, 2] )"
+          # Sort the array
+          - "{{[ 16, 4, 8, 2 ] | sort }} is eq( [ 2, 4, 8, 16] )"
+          # Flatten the three different arrays to one
+          - "{{[ 2, [4, [8, 16]]] | flatten }} is eq( [ 2, 4, 8, 16] )"
+
+    - name: Assertions of unique filter
+      debug:
+        msg: "{{[ 2, 8, 2, 4, 8, 2, 4 ] | unique  }}"
+
+        # Expected: [ 2, 8, 4]
+          
+    - name: Check difference filter
+      debug:
+        msg: "{{ [ 2, 4, 6, 8, 10] | difference([2, 4, 6, 16]) }}"
+
+        # Expected: [8, 10]
+
+    - name: Check intersect filter
+      debug:
+        msg: "{{ [ 2, 4, 6, 8, 10] | intersect([2, 4, 6, 16]) }}"
+
+        # Expected: [2, 4, 6]
+
+    - name: Use of combine filter
+      debug:
+        msg: "{{ {'A':1, 'B':2} | combine({'B':4, 'C':5}) }}"
+
+#        expected:
+#          A: 1
+#          B: 4
+#          C: 5
+
+    - name: Converting between dictionaries and lists part-1
+      debug:
+        msg: "{{ nfl_dict | dict2items }}"
+
+    - name: Converting between dictionaries and lists part-2 
+      debug: 
+        msg: "{{ nfl_items | items2dict }}" 
+
+    - name: Display strings SHA1 hash
+      debug:
+        msg: "{{ 'Giants' | hash('sha1') }}"
+
+    - name: Base64 encoding of Giants
+      debug:
+        msg: "{{ 'Giants' | b64encode }}"
+
+    - name: Base64 decoding of R2lhbnRz
+      debug:
+        msg: "{{ 'R2lhbnRz' | b64decode }}"
+
+    - name: Put quotes around Giants
+      vars:
+        variable2: Giants
+      debug:
+        msg: "{{ variable2 | quote }}"
+
+    - name: Change to lower case
+      debug:
+        msg: "{{ 'SEAHAWKS'| lower }}"
+
+    - name: Change to upper case
+      debug:
+        msg: "{{ 'falcons'| upper }}"
+
+    - name: Replace AryaStark
+      debug:
+        msg: "{{ 'AryaStark'| replace('Arya','Sansa') }}"
+
+    - name: Test regex_replace filter by removing 'foo' from 'foobar'
+      debug:
+        msg: "{{ 'foobar' | regex_replace('^f.*o(.*)$', '\\1') }}"
