@@ -1,5 +1,5 @@
 # DO374
 Developing Playbooks with Ansible Automation Platform 2
 
-This is my test for Github through CLI
+This is a test of Git on 17April2023
 
