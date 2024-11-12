@@ -1,7 +1,7 @@
 ---
 - name: Test of Ansible Navigator tool
   hosts: servera.lab.example.com
-  gather_facts: yes
+  #gather_facts: yes
   become: true
   tasks:
     - name: Deploy webservice
