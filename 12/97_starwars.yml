@@ -1,0 +1,5 @@
+---
+- name: Test of Collections
+  hosts: servere.lab.example.com
+  roles:
+    - starwars.yoda.jedi
