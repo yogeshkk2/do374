@@ -23,5 +23,5 @@
 
     - name: Content deployment
       copy:
-        content: "HelloWorld\n"
+        content: "Welcom to AU374\n"
         dest: /var/www/html/index.html
