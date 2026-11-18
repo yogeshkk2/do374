@@ -1,0 +1,5 @@
+controller_projects:
+  - name: Common Intranet Project
+    organization: Default
+    scm_type: git
+    scm_url: utility.lab.example.com:3000/student/my_webservers_DEV.git
