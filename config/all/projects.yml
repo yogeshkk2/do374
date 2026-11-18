@@ -3,3 +3,4 @@ controller_projects:
     organization: Default
     scm_type: git
     scm_url: utility.lab.example.com:3000/student/my_webservers_DEV.git
+    credential: 374-git-cred
