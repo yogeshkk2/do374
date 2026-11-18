@@ -1,6 +1,5 @@
 controller_projects:
-  - name: Common Intranet Project
+  - name: New Intranet Project
     organization: Default
     scm_type: git
-    scm_url: utility.lab.example.com:3000/student/my_webservers_DEV.git
-    credential: 374-git-cred
+    scm_url: github.com/yogeshkk2/do374.git
