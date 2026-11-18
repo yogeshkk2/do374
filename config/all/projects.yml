@@ -2,5 +2,5 @@ controller_projects:
   - name: New Intranet Project
     organization: Default
     scm_type: git
-    scm_url: https://github.com/yogeshkk2/do374.git
+    scm_url: https://github.com/yogeshkk2/do447.git
     timeout: 120
