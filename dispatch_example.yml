@@ -1,0 +1,16 @@
+- name: Configure AAP
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Load all common configuration
+      ansible.builtin.include_vars:
+        dir: "config/all"
+        extensions:
+          - 'yml'
+
+    - name: Run the main configuration role
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.dispatch
+      vars:
+        dispatch_include_wildcard_vars: true
